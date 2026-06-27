@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبتي الرقمية المتكاملة</title>
+    <!-- خط Cairo المميز المتطابق مع الصورة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== الهوية اللونية الفاخرة للـ Deep Cyber Space ===== */
+        :root {
+            --bg-main: #060b16;
+            --card-bg: rgba(15, 23, 42, 0.4);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f2fe;
+            --neon-purple: #9d4edd;
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --text-cyan: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(6, 11, 22, 1) 0%, #03060d 100%);
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* الكرات المضيئة المتموجة في الخلفية الفضائية العميقة */
+        .space-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,242,254,0.15) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 { top: 15%; left: 5%; width: 250px; height: 250px; }
+        .orb-2 { top: 25%; right: 5%; width: 150px; height: 150px; }
+
+        /* ===== شريط التنقّل العلوي الفخم (Navbar) ===== */
+        .navbar {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        .nav-logo i {
+            color: var(--text-cyan);
+        }
+        .nav-toggle {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .nav-toggle:hover {
+            color: var(--text-white);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ===== الهيدر والترحيب الرئيسي لـ محمود مبارك سيد ===== */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .badge-welcome {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .badge-welcome i {
+            color: #fbbf24;
+        }
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .hero-subtitle {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .hero-desc {
+            color: var(--text-gray);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* ===== بار الفلترة والبحث الذكي المتطابق ===== */
+        .search-filter-bar {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 15px 25px;
+            background: rgba(13, 20, 38, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-wrapper i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-wrapper input:focus {
+            border-color: var(--text-cyan);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+        }
+        .filter-tag {
+            padding: 8px 22px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            color: var(--text-white);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .filter-tag:hover, .filter-tag.active {
+            border-color: var(--text-cyan);
+            background: rgba(0, 242, 254, 0.08);
+            color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        /* ===== شبكة عرض الكتب لعدم التداخل (CSS Grid) ===== */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 140px; /* مسافة أمان سفلية للانعكاس البصري */
+            position: relative;
+            z-index: 10;
+        }
+        .grid-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            column-gap: 30px;
+            row-gap: 120px; /* حل مشكلة التداخل بشكل نهائي */
+        }
+
+        /* ===== كرت الكتاب الفاخر المطابق تماماً للصورة ===== */
+        .card-book {
+            background: rgba(13, 22, 47, 0.45);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            
+            /* الانعكاس الفخم الموضح في الصورة */
+            -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 75%, rgba(255, 255, 255, 0.05));
+        }
+        .card-book:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px rgba(0, 242, 254, 0.05);
+        }
+        .card-book.hidden {
+            display: none !important;
+        }
+
+        /* غلاف الكتاب */
+        .cover-box {
+            width: 145px;
+            height: 215px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .cover-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* تفاصيل الكتاب الداخلية */
+        .info-box {
+            display: flex;
+            flex-direction: column;
+            height: 215px; /* مساوي للغلاف لمنع تمدد النص لأسفل */
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        .title-book {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-white);
+            line-height: 1.4;
+        }
+        .tags-wrapper {
+            display: flex;
+            gap: 8px;
+            margin: 6px 0;
+            flex-wrap: wrap;
+        }
+        .tag-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-gray);
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .desc-book {
+            color: var(--text-gray);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            text-align: justify;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* حماية الهيكل وثبات الأبعاد لمنع التداخل */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        /* أزرار التحميل والقراءة الفاخرة */
+        .actions-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .btn-action {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        /* زر قراءة: المتدرج اللامتناهي الفخم في الصورة */
+        .btn-read-style {
+            background: linear-gradient(135deg, #3a7bd5, #3a6073);
+            color: var(--text-white);
+            box-shadow: 0 4px 15px rgba(58, 123, 213, 0.25);
+        }
+        .btn-read-style:hover {
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+        }
+        /* زر تحميل: المعدني الهادئ */
+        .btn-down-style {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-white);
+        }
+        .btn-down-style:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--text-gray);
+        }
+
+        /* ===== رسالة عدم العثور على نتائج ===== */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            display: none;
+        }
+
+        /* ===== تذييل الصفحة الفاخر المتطابق والمسطح تماماً ===== */
+        .footer-cyber {
+            background: #03060d;
+            border-top: 1px solid var(--card-border);
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .footer-text {
+            font-size: 0.88rem;
+            color: var(--text-gray);
+        }
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+        .footer-socials a {
+            color: var(--text-gray);
+            font-size: 1.05rem;
+            transition: color 0.3s;
+        }
+        .footer-socials a:hover {
+            color: var(--text-cyan);
+        }
+
+        /* التوافق التام المتجاوب مع الهواتف الشاشات */
+        @media (max-width: 992px) {
+            .grid-books { grid-template-columns: 1fr; row-gap: 90px; }
+            .search-filter-bar { flex-direction: column; align-items: stretch; }
+            .search-wrapper { max-width: 100%; }
+            .filter-tags { justify-content: center; flex-wrap: wrap; }
+            .footer-cyber { position: relative; margin-top: 40px; flex-direction: column; gap: 15px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الكرات السيبرانية المضيئة في الخلفية -->
+    <div class="space-orb orb-1"></div>
+    <div class="space-orb orb-2"></div>
+
+    <!-- بار التنقل العلوي -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class="fas fa-book-open"></i>
+            <span>المكتبة الرقمية</span>
+        </div>
+        <div class="nav-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- الهيدر والترحيب -->
+    <header class="hero-section">
+        <div class="badge-welcome">
+            <i class="fas fa-star"></i>
+            <span>بوابة الوعي والحرية النفسية</span>
+        </div>
+        <h1 class="hero-title">مكتبتي الرقمية المتكاملة.</h1>
+        <div class="hero-subtitle">
+            <span>بقلم محمود مبارك سيد</span>
+            <span>✍️</span>
+        </div>
+        <p class="hero-desc">
+            مرحباً بك في منصتي الخاصة! هنا تجد حصاد كُتبي مؤلفة ومصممة بأعلى معايير الدقة لمساعدتك على الإبحار نحو الوعي والحرية والتوازن الفكري.
+        </p>
+    </header>
+
+    <!-- بار البحث والفلترة الفوري المستوحى من الصورة -->
+    <div class="search-filter-bar">
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="liveSearch" placeholder="البحث السريع عن الكتب...">
+        </div>
+        <div class="filter-tags">
+            <button class="filter-tag active" data-cate="all">الكل</button>
+            <button class="filter-tag" data-cate="تنمية ذاتية">تنمية ذاتية</button>
+            <button class="filter-tag" data-cate="روحانيات">روحانيات</button>
+            <button class="filter-tag" data-cate="علاقات">علاقات</button>
+        </div>
+    </div>
+
+    <!-- الحاوية والشبكة البرمجية الحامية من التداخل -->
+    <main class="main-container">
+        <div class="grid-books" id="booksContainer">
+
+            <!-- كتاب 1 -->
+            <div class="card-book" data-category="تنمية ذاتية,صحة نفسية">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/YqvRnVG7/888.jpg" alt="غلاف متاهة الدوبامين" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">متاهة الدوبامين</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">تنمية ذاتية</span>
+                        <span class="tag-item">صحة نفسية</span>
+                    </div>
+                    <p class="desc-book">متاهة الدوبامين في صحة بأعان المصميمين لمسفهم بنياسيا مناهة الدوبامين والتهمني.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/qlkgy/jbmv/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/bt2bumqqzso6ija/متاهة+الدوبامين+من+الأسر+الرقمي+إلى+شاطئ+الحرية+(2).pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 2 -->
+            <div class="card-book" data-category="علاقات,روحانيات">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/1ngshxCH/556644.png" alt="غلاف حكمة العابرين" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">حكمة العابرين</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">علاقات</span>
+                        <span class="tag-item">روحانيات</span>
+                    </div>
+                    <p class="desc-book">حكمة العابرين أنها تجد حصاد كُتبي العابيير الدقة لمساعدتك على الإبحار بحكمة العابرين.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/qlkgy/gmsh/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/915gh21sc9s9bxd/حكمة+العابرين.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 3 -->
+            <div class="card-book" data-category="تنمية ذاتية,قوة النفس">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/QVCHhtYP/nfs-la-tnksr.png" alt="غلاف نفس لا تنكسر" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">نفس لا تنكسر</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">تنمية ذاتية</span>
+                        <span class="tag-item">قوة النفس</span>
+                    </div>
+                    <p class="desc-book">نفس لا تنكسر قوة النفس. قوتي النفس. وشتجمل مبن من الحوليد نفس لا تنكسر.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/jhsh/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/zn4beme55uo31fm/نفس+لا+تنكسر.pdf2.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 4 -->
+            <div class="card-book" data-category="روحانيات,فلسفة">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/SjG9Lj3f/33.png" alt="غلاف البرزخ" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">البرزخ</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">فلسفة</span>
+                    </div>
+                    <p class="desc-book">في قلب كل إنسان سؤال خفي يتردد: ماذا يحدث بعد الموت؟ هل تنتهي الحياة أم أن هناك حياة أخرى؟</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/dkgp/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/8ucen5gnazm78vk/البرزخ.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 5 -->
+            <div class="card-book" data-category="تنمية ذاتية,صحة نفسية">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/BPs4mSL0/777.png" alt="غلاف الظلام الذي لا يرى" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">الظلام الذي لا يرى</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">تنمية ذاتية</span>
+                        <span class="tag-item">صحة نفسية</span>
+                    </div>
+                    <p class="desc-book">حين تظلم النفس طريق العودة وتجد نفسها تقف وحيدة على حافة الانهيار، يأتي هذا الكتاب ليضيء المساحات.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/dsaf/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/wvj96r25keba84m/الظلام+الذي+لا+يرى.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 6 -->
+            <div class="card-book" data-category="روحانيات,غموض">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/zHR2HKX5/888.png" alt="غلاف شريكي في الظل" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">شريكي في الظل</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">غموض</span>
+                    </div>
+                    <p class="desc-book">صوت لا يسمعه غيرك.. يتناول هذا الكتاب موضوع القرين بعمق وبمنظور مختلف تماماً كاشفاً الخفايا.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/vhgr/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/6gvi9xxk2j28lh1/شريكي+في+الظل.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 7 -->
+            <div class="card-book" data-category="روحانيات,حماية">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/JGCCczV4/999.png" alt="غلاف عيون تصيب" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">عيون تصيب</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">حماية</span>
+                    </div>
+                    <p class="desc-book">في عالم تُراقب فيه النظرات أكثر مما تُصافح فيه القلوب، تتسلل عيون قد تبدو عابرة لكنها حاسمة.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/uzoa/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/b3z364m4cl963fw/عيون+تصيب+الحسد+بين+البلاء+والابتلاء.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 8 -->
+            <div class="card-book" data-category="روحانيات,علاج">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/w3QY2d6y/5994534285534678733.jpg" alt="غلاف دروب السحر" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">دروب السحر</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">علاج</span>
+                    </div>
+                    <p class="desc-book">بين القوانين الظاهرة يكمن عالم خفي تتقاطع فيه القوى، ومن هنا نشأت الحاجة لكشف الخفايا والرموز.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/ixwi/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/2l0os0ztaxlgb05/تم_بحمد_الله_كتاب_دروب_السحر[1].pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 9 -->
+            <div class="card-book" data-category="تنمية ذاتية,حماية">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/kVJbVCXR/5868260228397648349.jpg" alt="غلاف حصن النفس" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">حصن النفس</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">تنمية ذاتية</span>
+                        <span class="tag-item">حماية</span>
+                    </div>
+                    <p class="desc-book">ملاذ الأمان وقوة المواجهة.. رحلة مميزة في زيادة الوعي، وبناء الذات، وتحصينها ضد الضغوط السلبية.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/fmox/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/n5b72mfkaqhns7p/حصن+النفس.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 10 -->
+            <div class="card-book" data-category="فلسفة,وعي">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/tZTynSxF/221.png" alt="غلاف عندما لا تدرك" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">عندما لا تدرك</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">فلسفة</span>
+                        <span class="tag-item">وعي</span>
+                    </div>
+                    <p class="desc-book">هل أنت متأكد حقاً مما تراه؟ قبل أن تنتهي من هذا الكتاب، ستدرك أن اليقين الذي تعيش فيه ليس حقيقياً.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/qlkgy/wvfq/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/qhrroe1go4jdl5y/عندما+لا+تدرك+(1).pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 11 -->
+            <div class="card-book" data-category="روحانيات,سعادة">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/fkTzFv8V/Whats-App-Image-2026-06-07-at-1-49-19-PM.jpg" alt="غلاف اشتياق الأرواح" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">اشتياق الأرواح</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">سعادة</span>
+                    </div>
+                    <p class="desc-book">إن الإنسان مهما تعددت طرقه، وتنوعت أحلامه، لا يجد الفرح الحقيقي في متاع زائل بل في منابع الأفراح.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/wljx/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/y01wueewpo19elj/اشتياق+اليأرواح+إلى+منابع+الأفراح.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 12 -->
+            <div class="card-book" data-category="علاقات,فكر">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/NL7Ny6t5/Whats-App-Image-2026-06-07-at-2-00-27-PM.jpg" alt="غلاف قوامة الرجل" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">قوامة الرجل ورجاحة عقل المرأة</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">علاقات</span>
+                        <span class="tag-item">فكر</span>
+                    </div>
+                    <p class="desc-book">في زمن اختلطت فيه المفاهيم وتداخلت فيه الأصوات، يوضح هذا الكتاب المفهوم السامي للمودة والرحمة.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/qlkgy/gnjy/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/dd9uwn55lun0s0y/قوامة+الرجل+ورجاحة+عقل+المرأة.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 13 -->
+            <div class="card-book" data-category="علاقات,نقاء">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/fS9S9jtm/102.png" alt="غلاف زهور البنفسج" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">زهور البنفسج</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">علاقات</span>
+                        <span class="tag-item">نقاء</span>
+                    </div>
+                    <p class="desc-book">كتاب يغوص في فلسفة العلاقات؛ فليس كل اجتماع فتنة، ولا كل بُعد طهارة.. بل القلب الصادق المعيار.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/ziio/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://www.mediafire.com/file/6hjxrsm2kdxiok3/زهور+البنفسج.pdf/file" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كتاب 14 -->
+            <div class="card-book" data-category="روحانيات,رقية">
+                <div class="cover-box">
+                    <img src="https://i.postimg.cc/bSckLBj2/2026.png" alt="غلاف قلوب مطمئنة" loading="lazy">
+                </div>
+                <div class="info-box">
+                    <h2 class="title-book">قلوب مطمئنة</h2>
+                    <div class="tags-wrapper">
+                        <span class="tag-item">روحانيات</span>
+                        <span class="tag-item">رقية</span>
+                    </div>
+                    <p class="desc-book">خلاصة علم ومعايشة طويلة للرقية الشرعية ليوضح كيف تُهزم الأمراض الروحية والنفسية بيقين القلب.</p>
+                    <div class="actions-wrapper">
+                        <a href="https://online.fliphtml5.com/cabsn/lpdv/" class="btn-action btn-read-style" target="_blank"><i class="fas fa-book-reader"></i> قراءة</a>
+                        <a href="https://online.fliphtml5.com/cabsn/lpdv/" class="btn-action btn-down-style" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- حالة عدم وجود نتائج -->
+        <div class="empty-state" id="emptyState">
+            <h3>لا توجد كتب تطابق بحثك حالياً</h3>
+            <p style="color: var(--text-gray); margin-top: 10px;">جرب كتابة تفاصيل أو كلمات أخرى</p>
+        </div>
+    </main>
+
+    <!-- تذييل الصفحة الفاخر المستوحى من الصورة -->
+    <footer class="footer-cyber">
+        <div class="footer-text">
+            جميع الحقوق محفوظة للمكتبة الرقمية © 2026 | بقلم وبفكر الكاتب: محمود مبارك سيد
+        </div>
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <!-- السكريبت البرمجي للفرز والبحث اللحظي السريع -->
+    <script>
+        const liveSearch = document.getElementById('liveSearch');
+        const bookCards = document.querySelectorAll('.card-book');
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const emptyState = document.getElementById('emptyState');
+
+        function runLibraryEngine() {
+            const searchText = liveSearch.value.toLowerCase().trim();
+            const selectedCategory = document.querySelector('.filter-tag.active').getAttribute('data-cate');
+            let foundCount = 0;
+
+            bookCards.forEach(card => {
+                const title = card.querySelector('.title-book').textContent.toLowerCase();
+                const desc = card.querySelector('.desc-book').textContent.toLowerCase();
+                const categories = card.getAttribute('data-category').toLowerCase();
+
+                const matchedSearch = title.includes(searchText) || desc.includes(searchText);
+                const matchedCategory = selectedCategory === 'all' || categories.includes(selectedCategory);
+
+                if (matchedSearch && matchedCategory) {
+                    card.classList.remove('hidden');
+                    foundCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            emptyState.style.display = foundCount === 0 ? 'block' : 'none';
+        }
+
+        liveSearch.addEventListener('input', runLibraryEngine);
+
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                filterTags.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                runLibraryEngine();
+            });
+        });
+    </script>
+</body>
+</html>
